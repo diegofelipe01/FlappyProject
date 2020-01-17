@@ -19,6 +19,6 @@ public abstract class State {
     protected abstract void handleInput();
     public abstract void update(float dt);//dt is the delta time, that is the time between the frames rendered
     public abstract void render(SpriteBatch sb);//SpriteBatch is roughly a box where all of our sprites are going to be store for the use of rendering
-    public abstract void release();
+    public abstract void dispose();
 
 }

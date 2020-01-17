@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Stack;
 
 public class GameStateManager {
-    Stack<State> states;
+
+    private Stack<State> states;
 
     public GameStateManager(){
         states = new Stack<State>();
@@ -14,14 +15,16 @@ public class GameStateManager {
 
     public void push(State state){
         states.push(state);
+
     }
 
     public void  pop(){
-        states.pop();
+        states.pop().dispose();
+
     }
 
     public void set(State state){
-        states.pop();
+        states.pop().dispose();
         states.push(state);
     }
 

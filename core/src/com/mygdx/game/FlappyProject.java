@@ -2,11 +2,16 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.states.GameStateManager;
 import com.mygdx.game.states.MenuState;
+
+import java.awt.Font;
 
 /*************************************************
  *        Created on 01/15/2020 by Diego         *
@@ -24,13 +29,19 @@ public class FlappyProject extends ApplicationAdapter {
 	public static final String TITLE = "Flappy Clone";
 	private GameStateManager gsm;
 	private SpriteBatch batch;
-	Texture img;
+	private BitmapFont gitLink;
+	private Music mainTheme;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+
+		mainTheme = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+		mainTheme.setLooping(true);
+		mainTheme.setVolume(0.1f);
+		mainTheme.play();
+
 		gsm.push(new MenuState(gsm));
 	}
 
@@ -39,6 +50,13 @@ public class FlappyProject extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);
+
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		mainTheme.dispose();
 	}
 
 }
