@@ -25,6 +25,7 @@ public class Birb {
         birbHB = new Rectangle(x, y, texture.getWidth() / 3, texture.getHeight());//there's 3 animations in the same texture
     }
 
+
     public void update(float dt){
         birbAnimation.update(dt);
         if (position.y > 0) {
@@ -60,5 +61,7 @@ public class Birb {
     public Rectangle getBirbHB() {
         return birbHB;
     }
+
+    public static int getMOVEMENT() { return MOVEMENT; }
 
 }

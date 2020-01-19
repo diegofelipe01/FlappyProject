@@ -8,14 +8,15 @@ import java.util.Random;
 
 public class Tube {
     private Texture topTube, botTube;
-    private Vector2 pTopTube, pBotTube;//holders for the tubes position
-    private Rectangle top, bot;//hit box of the tubes
+    private Vector2 pTopTube, pBotTube;//holders for the tubes and gap position
+    private Rectangle top, bot;//hit box of the tubes and the gap
     private Random rng;//random to generate the tubes position
 
     private static final int MAX = 130; //the top tube position will be 130 tops
     private static final int GAP = 100;//the opening between the tubes will be whatever number is in this constant
     private static final int LOWGAP = 120;//the lowest position for the bottom tube
     public static final int TUBEWIDTH = 52;//The tube is 52 pixels wide
+
 
     public Tube(float x) {//x is the coordinate where the tube will be generated
         topTube = new Texture("toptube.png");
@@ -50,6 +51,7 @@ public class Tube {
     public Texture getBotTube() {
         return botTube;
     }
+
 
     public Vector2 getpTopTube() {
         return pTopTube;

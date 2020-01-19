@@ -1,22 +1,19 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.FlappyProject;
 
 public class MenuState extends State {
     private Texture background;
     private Texture playButton;
 
 
-    FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("DroidSans.ttf"));
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    BitmapFont gitLink;
+    private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/DroidSans.ttf"));
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    private BitmapFont gitLink;
 
     private static final int DEVICEWIDTH = Gdx.graphics.getWidth();
     private static final int DEVICEHEIGHT = Gdx.graphics.getHeight();
