@@ -34,6 +34,7 @@ public class Tube {
         pBotTube.set(x, pTopTube.y - GAP - botTube.getHeight());
         top.setPosition(pTopTube.x, pTopTube.y);
         bot.setPosition(pBotTube.x, pBotTube.y);
+
     }
     public boolean collision(Rectangle birb){
         return  birb.overlaps(top) || birb.overlaps(bot);//function that checks if the bird is touching the pipes
