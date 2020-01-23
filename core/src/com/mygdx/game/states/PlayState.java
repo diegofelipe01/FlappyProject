@@ -19,7 +19,7 @@ public class PlayState extends State {
     private static final int SPACE = 120;
     private static final int MAXTUBEQNT = 4;
 
-    public int score;
+    private int score;
 
     private Array<Tube> tubes;
 
@@ -76,7 +76,7 @@ public class PlayState extends State {
                 score++;
             }
             if(tube.collision(birb.getBirbHB()) || birb.getPosition().y <= ground.getHeight()){
-                gsm.set(new GameOverState(gsm));
+                gsm.set(new GameOverState(gsm, score));
                 break;
             }
 

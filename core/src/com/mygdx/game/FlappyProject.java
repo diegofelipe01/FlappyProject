@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -31,7 +32,10 @@ public class FlappyProject extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private BitmapFont gitLink;
 	private Music mainTheme;
-	
+
+
+
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -62,3 +66,5 @@ public class FlappyProject extends ApplicationAdapter {
 	}
 
 }
+
+
