@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -21,19 +19,18 @@ public class GameOverState extends State{
     private Table table;
     private Sound hit = Gdx.audio.newSound(Gdx.files.internal("hit.ogg"));
     private Preferences preferences;
+    private Skin skin;
 
-    private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/score.ttf"));
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    private BitmapFont scoreFont;
     private Label hScoreLabel;
     private Label currentScore;
-    private Label.LabelStyle labelStyle;
 
 
     public GameOverState(GameStateManager gam, int score) {
         super(gam);
 
         hit.play();
+
+        skin = new Skin(Gdx.files.internal("skins/commodore64/skin/uiskin.json"));
 
         preferences = Gdx.app.getPreferences("flappyPrefs");
         if(preferences.getInteger("highscore") < score){
@@ -47,22 +44,19 @@ public class GameOverState extends State{
         table = new Table();
         stage.addActor(table);
 
-        scoreFont = generator.generateFont(parameter);//TODO: MAKE THESE LABELS LOOK GOOD / MAKE A SKIN ;-;
-        labelStyle = new Label.LabelStyle();
-        labelStyle.font = scoreFont;
 
-        currentScore = new Label("Score: "+score, labelStyle);
+        currentScore = new Label("Score: "+score, skin);
         currentScore.setColor(0,0,0,1);
-        currentScore.setFontScale(3);
+        currentScore.setFontScale(1.8f);
         table.add(currentScore);
         table.row();
-        hScoreLabel = new Label("Highscore: "+preferences.getInteger("highscore"), labelStyle);
+        hScoreLabel = new Label("Highscore: "+preferences.getInteger("highscore"), skin);
         hScoreLabel.setColor(0,0,0,1);
-        hScoreLabel.setFontScale(4);
+        hScoreLabel.setFontScale(2.3f);
         table.add(hScoreLabel);
         table.row();
         gameOverButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/gameoverup.png")))), new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/gameoverdown.png")))));
-        table.add(gameOverButton);
+        table.add(gameOverButton).pad(30);
         table.setFillParent(true);
 
 
@@ -95,7 +89,6 @@ public class GameOverState extends State{
 
     @Override
     public void dispose() {
-        //background.dispose();
         stage.dispose();
         hit.dispose();
         System.out.println("GameOverStage disposed!");

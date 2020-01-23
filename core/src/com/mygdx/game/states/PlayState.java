@@ -1,25 +1,25 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FlappyProject;
 import com.mygdx.game.sprites.Birb;
 import com.mygdx.game.sprites.Tube;
-
-import java.util.concurrent.TimeUnit;
 
 public class PlayState extends State {
     private static final int SPACE = 120;
     private static final int MAXTUBEQNT = 4;
 
     private int score;
+
+    private boolean start = false;
 
     private Array<Tube> tubes;
 
@@ -31,26 +31,30 @@ public class PlayState extends State {
     private Vector2 groundPos1, groundPos2;
 
 
-    private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/score.ttf"));
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    public FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/score.ttf"));
+    public FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
     private BitmapFont scoreLabel;
 
     public PlayState(GameStateManager gam) {
         super(gam);
-        score = 0;
-        parameter.size = 50;
-        scoreLabel = generator.generateFont(parameter);
-        scoreLabel.setColor(0,0,0,1);
-        birb = new Birb(30, 200);
         camera.setToOrtho(false, FlappyProject.WIDTH / 2, FlappyProject.HEIGHT / 2);
-        background = new Texture("background.png");
-        ground = new Texture("ground.png");
-        groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);//so that it's rendered from the left
-        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + ground.getWidth(), 0);//so that it's render after the other ground
         tubes = new Array<Tube>();
         for(int i = 1; i <= MAXTUBEQNT; i++){
             tubes.add(new Tube(i *(SPACE + Tube.TUBEWIDTH)));
         }
+        birb = new Birb(30, 200);
+
+        background = new Texture("background.png");
+        ground = new Texture("ground.png");
+        groundPos1 = new Vector2(camera.position.x - camera.viewportWidth / 2, 0);//so that it's rendered from the left
+        groundPos2 = new Vector2((camera.position.x - camera.viewportWidth / 2) + ground.getWidth(), 0);//so that it's render after the other ground
+
+        score = 0;
+        parameter.size = 90;
+        scoreLabel = generator.generateFont(parameter);
+        scoreLabel.setColor(0,0,0,1);
+
+
 
     }
 
@@ -68,7 +72,6 @@ public class PlayState extends State {
         updateGround();
         birb.update(dt);
         System.out.println(score);
-
 
         for(Tube tube : tubes){
             if(camera.position.x - (camera.viewportWidth / 2) > tube.getpTopTube().x + tube.getTopTube().getWidth()){
@@ -100,11 +103,21 @@ public class PlayState extends State {
 
         sb.draw(ground, groundPos1.x, groundPos1.y);
         sb.draw(ground, groundPos2.x, groundPos2.y);
-        scoreLabel.draw(sb, ""+score, birb.getPosition().x - 10, birb.getPosition().y);//TODO: FIX THIS
         sb.end();
 
-
+        Matrix4 uiMatrix = camera.combined.cpy();
+        uiMatrix.setToOrtho2D(0, 0, FlappyProject.WIDTH, FlappyProject.HEIGHT);
+        sb.setProjectionMatrix(uiMatrix);
+        sb.begin();
+        scoreLabel.draw(sb, ""+score, getPositionOffset(scoreLabel, Integer.toString(score)), 700);
+        sb.end();
     }
+    private float getPositionOffset(BitmapFont bitmapFont, String value) {//TODO: CENTRALIZE THE SCORE
+        GlyphLayout glyphLayout = new GlyphLayout();
+        glyphLayout.setText(bitmapFont, value);
+        return (FlappyProject.WIDTH/ 2) - glyphLayout.width;
+    }
+
 
     private void updateGround(){
         if(camera.position.x - (camera.viewportWidth / 2) > groundPos1.x + ground.getWidth()){
@@ -122,11 +135,11 @@ public class PlayState extends State {
         background.dispose();
         birb.dispose();
         ground.dispose();
+        generator.dispose();
+        scoreLabel.dispose();
         for(Tube tube : tubes){
             tube.dispose();
         }
-        generator.dispose();
-        scoreLabel.dispose();
         System.out.println("PlayState Disposed!");
 
     }
