@@ -25,8 +25,8 @@ public class GameOverState extends State{
     private Label currentScore;
 
 
-    public GameOverState(GameStateManager gam, int score) {
-        super(gam);
+    public GameOverState(final GameStateManager gsm, int score) {
+        super(gsm);
 
         hit.play();
 
@@ -81,7 +81,7 @@ public class GameOverState extends State{
 
     @Override
     public void render(SpriteBatch sb) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+
         stage.act();
         stage.draw();
 

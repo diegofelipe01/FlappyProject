@@ -53,6 +53,8 @@ public class PlayState extends State {
         parameter.size = 90;
         scoreLabel = generator.generateFont(parameter);
         scoreLabel.setColor(0,0,0,1);
+        scoreLabel.setUseIntegerPositions(true);
+        scoreLabel.setFixedWidthGlyphs(Integer.toString(score));
 
 
 
@@ -109,14 +111,10 @@ public class PlayState extends State {
         uiMatrix.setToOrtho2D(0, 0, FlappyProject.WIDTH, FlappyProject.HEIGHT);
         sb.setProjectionMatrix(uiMatrix);
         sb.begin();
-        scoreLabel.draw(sb, ""+score, getPositionOffset(scoreLabel, Integer.toString(score)), 700);
+        scoreLabel.draw(sb, ""+score, 10, 790);
         sb.end();
     }
-    private float getPositionOffset(BitmapFont bitmapFont, String value) {//TODO: CENTRALIZE THE SCORE
-        GlyphLayout glyphLayout = new GlyphLayout();
-        glyphLayout.setText(bitmapFont, value);
-        return (FlappyProject.WIDTH/ 2) - glyphLayout.width;
-    }
+
 
 
     private void updateGround(){

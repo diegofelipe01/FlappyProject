@@ -4,9 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.states.GameStateManager;
 import com.mygdx.game.states.MenuState;
 
@@ -20,16 +18,15 @@ import com.mygdx.game.states.MenuState;
  *************************************************/
 
 public class FlappyProject extends ApplicationAdapter {
-	//gobal variable
+	//gobal variables
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 
-	public static final String TITLE = "Flappy Clone";
+	public static final String TITLE = "黒い鳥";
+
 	private GameStateManager gsm;
 	private SpriteBatch batch;
-	private BitmapFont gitLink;
 	private Music mainTheme;
-	private Skin skin;
 
 	@Override
 	public void create () {

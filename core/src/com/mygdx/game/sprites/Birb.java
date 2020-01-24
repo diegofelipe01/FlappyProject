@@ -20,7 +20,7 @@ public class Birb {
         position = new Vector2(x, y);
         velocity = new Vector2(0, 0);
 
-        texture = new Texture("birbanim.png");
+        texture = new Texture("animations/blackbirbanim.png");
         birbAnimation = new Animation(new TextureRegion(texture), 3, 0.5f);
         birbHB = new Rectangle(x, y, texture.getWidth() / 3, texture.getHeight());//there's 3 animations in the same texture
     }
